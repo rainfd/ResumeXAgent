@@ -13,6 +13,6 @@
 
 ## 变更日志
 
-| Date | Version | Description | Author |
-|------|---------|-------------|--------|
-| 2025-08-06 | 1.0 | 初始架构文档创建，基于PRD v1.0 | Winston (Architect) |
+| Date       | Version | Description                    | Author              |
+| ---------- | ------- | ------------------------------ | ------------------- |
+| 2025-08-06 | 1.0     | 初始架构文档创建，基于PRD v1.0 | Winston (Architect) |

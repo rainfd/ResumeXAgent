@@ -24,8 +24,8 @@ export interface IEducation {
 export interface IWorkExperience {
   company: string;
   position: string;
-  startDate: string;  // ISO date string
-  endDate?: string;   // ISO date string, undefined if current
+  startDate: string; // ISO date string
+  endDate?: string; // ISO date string, undefined if current
   location?: string;
   description: string;
   achievements?: string[];
@@ -135,6 +135,54 @@ export interface IResumeValidationResult {
   errors: IResumeValidationError[];
 }
 
+// Resume 解析相关类型
+export type FileType = 'pdf' | 'markdown' | 'txt';
+
+export interface ParsedResume {
+  basic_info: IBasicInfo;
+  sections: ResumeSection[];
+  metadata: ParseMetadata;
+}
+
+export interface ResumeSection {
+  type: 'education' | 'experience' | 'projects' | 'skills' | 'other';
+  title: string;
+  content: string;
+  items: any[];
+}
+
+export interface ParseMetadata {
+  file_type: FileType;
+  parsing_method: string;
+  confidence: number;
+  timestamp: string;
+  warnings: string[];
+  errors: string[];
+  text_length: number;
+  processing_time_ms: number;
+  language?: 'zh-CN' | 'en-US';
+  ai_enabled?: boolean;
+  ai_model?: string;
+}
+
+export interface ParserConfig {
+  max_text_size: number;
+  timeout_ms: number;
+  enable_ai_parsing: boolean;
+  ai_model?: string;
+  language: 'zh-CN' | 'en-US';
+}
+
+export interface ParserOptions {
+  extract_basic_info: boolean;
+  extract_education: boolean;
+  extract_work_experience: boolean;
+  extract_projects: boolean;
+  extract_skills: boolean;
+  preserve_formatting: boolean;
+  language_detection: boolean;
+}
+
 // Resume 处理相关类型
 export interface IResumeParsingOptions {
   extractBasicInfo?: boolean;
@@ -157,6 +205,19 @@ export interface IResumeParsingResult {
   warnings?: string[];
 }
 
+// 解析器错误类型
+export class ParserError extends Error {
+  constructor(
+    message: string,
+    public code: string,
+    public file_type?: FileType,
+    public original_error?: Error
+  ) {
+    super(message);
+    this.name = 'ParserError';
+  }
+}
+
 // 简历统计相关类型
 export interface IResumeStats {
   totalResumes: number;
@@ -165,7 +226,7 @@ export interface IResumeStats {
     markdown: number;
     txt: number;
   };
-  recentUploads: number;  // 最近30天
+  recentUploads: number; // 最近30天
   averageExperienceYears?: number;
   topSkills?: string[];
   topCompanies?: string[];

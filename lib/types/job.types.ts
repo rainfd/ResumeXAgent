@@ -177,11 +177,11 @@ export interface IJobStats {
 
 // Job 匹配评分相关类型
 export interface IJobScoring {
-  skillMatch: number;      // 0-100
+  skillMatch: number; // 0-100
   experienceMatch: number; // 0-100
-  educationMatch: number;  // 0-100
-  locationMatch?: number;  // 0-100
-  cultureMatch?: number;   // 0-100
+  educationMatch: number; // 0-100
+  locationMatch?: number; // 0-100
+  cultureMatch?: number; // 0-100
 }
 
 export interface IJobMatchCriteria {
@@ -196,4 +196,139 @@ export interface IJobMatchCriteria {
     education: number;
     location: number;
   };
+}
+
+// Job 工作内容分析相关类型
+export enum ResponsibilityCategory {
+  CORE = 'core',
+  SUPPORT = 'support',
+  OCCASIONAL = 'occasional',
+}
+
+export enum ImportanceLevel {
+  HIGH = 'high',
+  MEDIUM = 'medium',
+  LOW = 'low',
+}
+
+export enum FrequencyLevel {
+  DAILY = 'daily',
+  WEEKLY = 'weekly',
+  MONTHLY = 'monthly',
+  OCCASIONAL = 'occasional',
+}
+
+export enum WorkType {
+  DEVELOPMENT = '开发',
+  TESTING = '测试',
+  DESIGN = '设计',
+  PRODUCT_MANAGEMENT = '产品管理',
+  PROJECT_MANAGEMENT = '项目管理',
+  RESEARCH = '研发',
+  OPERATIONS = '运维',
+  DATA_ANALYSIS = '数据分析',
+}
+
+export enum ExperienceLevel {
+  JUNIOR = '初级',
+  INTERMEDIATE = '中级',
+  SENIOR = '高级',
+  EXPERT = '专家级',
+}
+
+export enum BusinessDomain {
+  ECOMMERCE = '电商',
+  FINTECH = '金融科技',
+  EDUCATION = '教育',
+  HEALTHCARE = '医疗',
+  GAMING = '游戏',
+  ENTERPRISE = '企业服务',
+}
+
+export enum ComplexityLevel {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  EXPERT = 'expert',
+}
+
+export enum CareerPath {
+  TECHNICAL_EXPERT = '技术专家',
+  MANAGEMENT = '管理路线',
+  PRODUCT = '产品方向',
+  ARCHITECT = '架构师',
+}
+
+export enum ImpactScope {
+  TEAM = '团队级',
+  DEPARTMENT = '部门级',
+  COMPANY = '公司级',
+  INDUSTRY = '行业级',
+}
+
+export interface Responsibility {
+  description: string;
+  category: ResponsibilityCategory;
+  importance: ImportanceLevel;
+  frequency: FrequencyLevel;
+  keywords: string[];
+}
+
+export interface WorkTypeAnalysis {
+  type: WorkType;
+  percentage: number;
+  description: string;
+  level: ExperienceLevel;
+}
+
+export interface ProjectScale {
+  teamSize: string;
+  projectDuration: string;
+  userScale: string;
+}
+
+export interface TechChallenge {
+  type: string;
+  description: string;
+  complexity: ComplexityLevel;
+}
+
+export interface TechStackAnalysis {
+  projectScale: ProjectScale;
+  techComplexity: ComplexityLevel;
+  domain: BusinessDomain[];
+  modernization: number;
+  challenges: TechChallenge[];
+}
+
+export interface CollaborationInfo {
+  department: string;
+  frequency: FrequencyLevel;
+  depth: string;
+  requirements: string[];
+}
+
+export interface GrowthAssessment {
+  learningOpportunities: number;
+  careerPath: CareerPath[];
+  challengeLevel: number;
+  impactScope: ImpactScope;
+  growthPotential: number;
+}
+
+export interface JobSummary {
+  overview: string;
+  keywords: string[];
+  highlights: string[];
+}
+
+export interface JobContentAnalysis {
+  responsibilities: Responsibility[];
+  workTypes: WorkTypeAnalysis[];
+  techStackAnalysis: TechStackAnalysis;
+  collaborationRequirements: CollaborationInfo[];
+  growthAssessment: GrowthAssessment;
+  summary: JobSummary;
+  analysisDate: string;
+  confidenceScore: number;
 }

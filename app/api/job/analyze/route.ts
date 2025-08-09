@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BrowserService } from '@/lib/services/browser.service';
 import { JobRepository } from '@/lib/repositories/job.repository';
+import { SkillExtractorService } from '@/lib/services/skill-extractor.service';
 import { logger } from '@/lib/utils/logger';
 
 interface AnalyzeRequest {
@@ -8,7 +9,42 @@ interface AnalyzeRequest {
 }
 
 // 辅助函数：从提取的岗位信息创建数据库记录
-function createJobFromInfo(jobRepository: JobRepository, url: string, jobInfo: any) {
+async function createJobFromInfo(
+  jobRepository: JobRepository,
+  url: string,
+  jobInfo: any
+) {
+  // 执行技能分析
+  logger.info('开始分析岗位技能要求');
+  const skillExtractor = new SkillExtractorService();
+
+  let technicalSkills = null;
+  let softSkills = null;
+  let skillAnalysis = null;
+
+  try {
+    if (jobInfo.raw_description) {
+      skillAnalysis = await skillExtractor.analyzeJobSkills(
+        jobInfo.raw_description,
+        jobInfo.title
+      );
+
+      technicalSkills = skillAnalysis.technicalSkills;
+      softSkills = skillAnalysis.softSkills;
+
+      logger.info('技能分析完成', 'API', {
+        technicalSkills: technicalSkills.length,
+        softSkills: softSkills.length,
+      });
+    }
+  } catch (error) {
+    logger.error(
+      '技能分析失败，继续创建岗位记录',
+      'API',
+      error instanceof Error ? error : undefined
+    );
+  }
+
   const jobData = {
     url: url,
     title: jobInfo.title,
@@ -18,7 +54,18 @@ function createJobFromInfo(jobRepository: JobRepository, url: string, jobInfo: a
     experience_required: jobInfo.experience_required || null,
     education_required: jobInfo.education_required || null,
     raw_description: jobInfo.raw_description,
+    technical_skills: technicalSkills ? JSON.stringify(technicalSkills) : null,
+    soft_skills: softSkills ? JSON.stringify(softSkills) : null,
+    parsed_requirements: skillAnalysis
+      ? JSON.stringify({
+          skillAnalysis: {
+            metadata: skillAnalysis.metadata,
+            visualizationData: skillAnalysis.visualizationData,
+          },
+        })
+      : null,
   };
+
   return jobRepository.create(jobData);
 }
 
@@ -87,9 +134,18 @@ export async function POST(request: NextRequest) {
           experience_required: existingJob.experience_required,
           education_required: existingJob.education_required,
           raw_description: existingJob.raw_description,
+          technical_skills: existingJob.technical_skills
+            ? JSON.parse(existingJob.technical_skills)
+            : null,
+          soft_skills: existingJob.soft_skills
+            ? JSON.parse(existingJob.soft_skills)
+            : null,
+          skill_analysis: existingJob.parsed_requirements
+            ? JSON.parse(existingJob.parsed_requirements)
+            : null,
           created_at: existingJob.created_at,
         },
-        message: '岗位信息已存在，直接返回缓存结果',
+        message: '岗位信息已存在，直接返回缓存结果（包含技能分析）',
       });
     }
 
@@ -117,7 +173,11 @@ export async function POST(request: NextRequest) {
     }
 
     // 存储岗位信息到数据库
-    const createdJob = createJobFromInfo(jobRepository, body.url, result.data);
+    const createdJob = await createJobFromInfo(
+      jobRepository,
+      body.url,
+      result.data
+    );
 
     logger.info(`岗位分析完成，已保存: ${createdJob.id}`);
 
@@ -133,12 +193,25 @@ export async function POST(request: NextRequest) {
         experience_required: createdJob.experience_required,
         education_required: createdJob.education_required,
         raw_description: createdJob.raw_description,
+        technical_skills: createdJob.technical_skills
+          ? JSON.parse(createdJob.technical_skills)
+          : null,
+        soft_skills: createdJob.soft_skills
+          ? JSON.parse(createdJob.soft_skills)
+          : null,
+        skill_analysis: createdJob.parsed_requirements
+          ? JSON.parse(createdJob.parsed_requirements)
+          : null,
         created_at: createdJob.created_at,
       },
-      message: '岗位分析完成',
+      message: '岗位分析完成（包含技能分析）',
     });
   } catch (error) {
-    logger.error('岗位分析API错误', 'API', error instanceof Error ? error : undefined);
+    logger.error(
+      '岗位分析API错误',
+      'API',
+      error instanceof Error ? error : undefined
+    );
 
     return NextResponse.json(
       {
@@ -153,7 +226,11 @@ export async function POST(request: NextRequest) {
       try {
         await browserService.closeBrowser();
       } catch (error) {
-        logger.error('关闭浏览器失败', 'API', error instanceof Error ? error : undefined);
+        logger.error(
+          '关闭浏览器失败',
+          'API',
+          error instanceof Error ? error : undefined
+        );
       }
     }
   }
@@ -195,7 +272,11 @@ export async function PUT(request: NextRequest) {
 
     // 存储到数据库
     const jobRepository = new JobRepository();
-    const createdJob = createJobFromInfo(jobRepository, body.url, jobInfo);
+    const createdJob = await createJobFromInfo(
+      jobRepository,
+      body.url,
+      jobInfo
+    );
 
     logger.info(`岗位分析完成（验证后），已保存: ${createdJob.id}`);
 
@@ -211,12 +292,25 @@ export async function PUT(request: NextRequest) {
         experience_required: createdJob.experience_required,
         education_required: createdJob.education_required,
         raw_description: createdJob.raw_description,
+        technical_skills: createdJob.technical_skills
+          ? JSON.parse(createdJob.technical_skills)
+          : null,
+        soft_skills: createdJob.soft_skills
+          ? JSON.parse(createdJob.soft_skills)
+          : null,
+        skill_analysis: createdJob.parsed_requirements
+          ? JSON.parse(createdJob.parsed_requirements)
+          : null,
         created_at: createdJob.created_at,
       },
-      message: '岗位分析完成',
+      message: '岗位分析完成（包含技能分析）',
     });
   } catch (error) {
-    logger.error('岗位分析API错误（验证后）', 'API', error instanceof Error ? error : undefined);
+    logger.error(
+      '岗位分析API错误（验证后）',
+      'API',
+      error instanceof Error ? error : undefined
+    );
 
     return NextResponse.json(
       {
@@ -230,7 +324,11 @@ export async function PUT(request: NextRequest) {
       try {
         await browserService.closeBrowser();
       } catch (error) {
-        logger.error('关闭浏览器失败', 'API', error instanceof Error ? error : undefined);
+        logger.error(
+          '关闭浏览器失败',
+          'API',
+          error instanceof Error ? error : undefined
+        );
       }
     }
   }

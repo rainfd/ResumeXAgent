@@ -1,0 +1,589 @@
+{
+  "programmingLanguages": [
+    {
+      "name": "JavaScript",
+      "aliases": ["JS", "Javascript", "java script", "js"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "ES6", "aliases": ["ECMAScript 6", "ES2015"], "version": "ES6" },
+        { "name": "ES2017", "aliases": ["ES8"], "version": "ES2017" },
+        { "name": "ES2018", "aliases": ["ES9"], "version": "ES2018" },
+        { "name": "ES2020", "aliases": ["ES11"], "version": "ES2020" }
+      ],
+      "weight": 9,
+      "rarity": 2,
+      "marketDemand": 10,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Python",
+      "aliases": ["python", "Python3", "py"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "Python 2.7", "aliases": ["Python2", "Py2"], "version": "2.7" },
+        { "name": "Python 3.x", "aliases": ["Python3", "Py3"], "version": "3.x" },
+        { "name": "Python 3.8", "aliases": [], "version": "3.8" },
+        { "name": "Python 3.9", "aliases": [], "version": "3.9" },
+        { "name": "Python 3.10", "aliases": [], "version": "3.10" },
+        { "name": "Python 3.11", "aliases": [], "version": "3.11" }
+      ],
+      "weight": 9,
+      "rarity": 2,
+      "marketDemand": 10,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Java",
+      "aliases": ["java", "JAVA"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "Java 8", "aliases": ["JDK 8", "Java 1.8"], "version": "8" },
+        { "name": "Java 11", "aliases": ["JDK 11"], "version": "11" },
+        { "name": "Java 17", "aliases": ["JDK 17"], "version": "17" },
+        { "name": "Java 21", "aliases": ["JDK 21"], "version": "21" }
+      ],
+      "weight": 8,
+      "rarity": 3,
+      "marketDemand": 9,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "TypeScript",
+      "aliases": ["TS", "typescript", "Typescript"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "TypeScript 4.x", "aliases": ["TS 4"], "version": "4.x" },
+        { "name": "TypeScript 5.x", "aliases": ["TS 5"], "version": "5.x" }
+      ],
+      "weight": 8,
+      "rarity": 4,
+      "marketDemand": 9,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "Go",
+      "aliases": ["golang", "Golang", "GO"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "Go 1.18", "aliases": [], "version": "1.18" },
+        { "name": "Go 1.19", "aliases": [], "version": "1.19" },
+        { "name": "Go 1.20", "aliases": [], "version": "1.20" },
+        { "name": "Go 1.21", "aliases": [], "version": "1.21" }
+      ],
+      "weight": 7,
+      "rarity": 6,
+      "marketDemand": 8,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Rust",
+      "aliases": ["rust", "RUST"],
+      "category": "编程语言",
+      "variants": [],
+      "weight": 6,
+      "rarity": 8,
+      "marketDemand": 6,
+      "learningDifficulty": 9
+    },
+    {
+      "name": "C++",
+      "aliases": ["cpp", "C plus plus", "c++"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "C++11", "aliases": [], "version": "C++11" },
+        { "name": "C++14", "aliases": [], "version": "C++14" },
+        { "name": "C++17", "aliases": [], "version": "C++17" },
+        { "name": "C++20", "aliases": [], "version": "C++20" }
+      ],
+      "weight": 7,
+      "rarity": 7,
+      "marketDemand": 7,
+      "learningDifficulty": 9
+    },
+    {
+      "name": "C#",
+      "aliases": ["csharp", "C sharp", "c#"],
+      "category": "编程语言",
+      "variants": [
+        { "name": ".NET Framework", "aliases": [".NET", "dotnet"], "version": ".NET Framework" },
+        { "name": ".NET Core", "aliases": ["dotnet core"], "version": ".NET Core" },
+        { "name": ".NET 6", "aliases": [], "version": ".NET 6" },
+        { "name": ".NET 7", "aliases": [], "version": ".NET 7" },
+        { "name": ".NET 8", "aliases": [], "version": ".NET 8" }
+      ],
+      "weight": 7,
+      "rarity": 5,
+      "marketDemand": 8,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "PHP",
+      "aliases": ["php", "PHP"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "PHP 7", "aliases": ["PHP 7.x"], "version": "7" },
+        { "name": "PHP 8", "aliases": ["PHP 8.x"], "version": "8" }
+      ],
+      "weight": 6,
+      "rarity": 4,
+      "marketDemand": 7,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Ruby",
+      "aliases": ["ruby", "RUBY"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "Ruby 2.7", "aliases": [], "version": "2.7" },
+        { "name": "Ruby 3.0", "aliases": [], "version": "3.0" },
+        { "name": "Ruby 3.1", "aliases": [], "version": "3.1" }
+      ],
+      "weight": 5,
+      "rarity": 6,
+      "marketDemand": 5,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Swift",
+      "aliases": ["swift", "SWIFT"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "Swift 5", "aliases": [], "version": "5" },
+        { "name": "SwiftUI", "aliases": [], "context": "UI框架" }
+      ],
+      "weight": 6,
+      "rarity": 7,
+      "marketDemand": 6,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Kotlin",
+      "aliases": ["kotlin", "KOTLIN"],
+      "category": "编程语言",
+      "variants": [
+        { "name": "Kotlin Multiplatform", "aliases": ["KMP"], "context": "跨平台" }
+      ],
+      "weight": 6,
+      "rarity": 6,
+      "marketDemand": 7,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Dart",
+      "aliases": ["dart", "DART"],
+      "category": "编程语言",
+      "variants": [],
+      "weight": 5,
+      "rarity": 7,
+      "marketDemand": 5,
+      "learningDifficulty": 6
+    }
+  ],
+  "frameworks": [
+    {
+      "name": "React",
+      "aliases": ["ReactJS", "React.js", "react", "reactjs"],
+      "category": "开发框架",
+      "variants": [
+        { "name": "React 16", "aliases": [], "version": "16" },
+        { "name": "React 17", "aliases": [], "version": "17" },
+        { "name": "React 18", "aliases": [], "version": "18" },
+        { "name": "React Hooks", "aliases": ["hooks"], "context": "Hook模式" },
+        { "name": "React Router", "aliases": ["react-router"], "context": "路由" },
+        { "name": "Redux", "aliases": ["redux"], "context": "状态管理" },
+        { "name": "Next.js", "aliases": ["nextjs", "Next"], "context": "全栈框架" }
+      ],
+      "weight": 9,
+      "rarity": 3,
+      "marketDemand": 10,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Vue",
+      "aliases": ["Vue.js", "VueJS", "vue", "vuejs"],
+      "category": "开发框架",
+      "variants": [
+        { "name": "Vue 2", "aliases": ["Vue.js 2"], "version": "2" },
+        { "name": "Vue 3", "aliases": ["Vue.js 3"], "version": "3" },
+        { "name": "Vuex", "aliases": [], "context": "状态管理" },
+        { "name": "Vue Router", "aliases": [], "context": "路由" },
+        { "name": "Nuxt.js", "aliases": ["nuxt", "Nuxt"], "context": "全栈框架" }
+      ],
+      "weight": 8,
+      "rarity": 4,
+      "marketDemand": 9,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Angular",
+      "aliases": ["AngularJS", "angular", "angularjs"],
+      "category": "开发框架",
+      "variants": [
+        { "name": "Angular 12", "aliases": [], "version": "12" },
+        { "name": "Angular 13", "aliases": [], "version": "13" },
+        { "name": "Angular 14", "aliases": [], "version": "14" },
+        { "name": "Angular 15", "aliases": [], "version": "15" },
+        { "name": "Angular 16", "aliases": [], "version": "16" }
+      ],
+      "weight": 7,
+      "rarity": 5,
+      "marketDemand": 8,
+      "learningDifficulty": 8
+    },
+    {
+      "name": "Express",
+      "aliases": ["Express.js", "expressjs", "express"],
+      "category": "开发框架",
+      "variants": [],
+      "weight": 7,
+      "rarity": 4,
+      "marketDemand": 8,
+      "learningDifficulty": 4
+    },
+    {
+      "name": "Node.js",
+      "aliases": ["nodejs", "node", "Node"],
+      "category": "开发框架",
+      "variants": [
+        { "name": "Node.js 16", "aliases": [], "version": "16" },
+        { "name": "Node.js 18", "aliases": [], "version": "18" },
+        { "name": "Node.js 20", "aliases": [], "version": "20" }
+      ],
+      "weight": 8,
+      "rarity": 3,
+      "marketDemand": 9,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Spring",
+      "aliases": ["Spring Framework", "spring"],
+      "category": "开发框架",
+      "variants": [
+        { "name": "Spring Boot", "aliases": ["springboot"], "context": "微服务框架" },
+        { "name": "Spring MVC", "aliases": [], "context": "Web框架" },
+        { "name": "Spring Security", "aliases": [], "context": "安全框架" },
+        { "name": "Spring Cloud", "aliases": [], "context": "微服务生态" }
+      ],
+      "weight": 8,
+      "rarity": 4,
+      "marketDemand": 9,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "Django",
+      "aliases": ["django"],
+      "category": "开发框架",
+      "variants": [
+        { "name": "Django REST Framework", "aliases": ["DRF"], "context": "API框架" }
+      ],
+      "weight": 7,
+      "rarity": 5,
+      "marketDemand": 7,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Flask",
+      "aliases": ["flask"],
+      "category": "开发框架",
+      "variants": [],
+      "weight": 6,
+      "rarity": 5,
+      "marketDemand": 6,
+      "learningDifficulty": 4
+    },
+    {
+      "name": "Laravel",
+      "aliases": ["laravel"],
+      "category": "开发框架",
+      "variants": [],
+      "weight": 6,
+      "rarity": 5,
+      "marketDemand": 7,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Ruby on Rails",
+      "aliases": ["Rails", "rails", "RoR"],
+      "category": "开发框架",
+      "variants": [],
+      "weight": 5,
+      "rarity": 7,
+      "marketDemand": 5,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Flutter",
+      "aliases": ["flutter"],
+      "category": "开发框架",
+      "variants": [],
+      "weight": 7,
+      "rarity": 6,
+      "marketDemand": 7,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "React Native",
+      "aliases": ["react-native", "reactnative", "RN"],
+      "category": "开发框架",
+      "variants": [],
+      "weight": 7,
+      "rarity": 5,
+      "marketDemand": 8,
+      "learningDifficulty": 7
+    }
+  ],
+  "databases": [
+    {
+      "name": "MySQL",
+      "aliases": ["mysql", "MYSQL"],
+      "category": "数据库",
+      "variants": [
+        { "name": "MySQL 5.7", "aliases": [], "version": "5.7" },
+        { "name": "MySQL 8.0", "aliases": [], "version": "8.0" }
+      ],
+      "weight": 8,
+      "rarity": 3,
+      "marketDemand": 9,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "PostgreSQL",
+      "aliases": ["postgres", "psql", "postgresql"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 7,
+      "rarity": 4,
+      "marketDemand": 8,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "MongoDB",
+      "aliases": ["mongo", "mongodb"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 7,
+      "rarity": 4,
+      "marketDemand": 8,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Redis",
+      "aliases": ["redis", "REDIS"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 7,
+      "rarity": 4,
+      "marketDemand": 8,
+      "learningDifficulty": 4
+    },
+    {
+      "name": "SQLite",
+      "aliases": ["sqlite", "sqlite3"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 5,
+      "rarity": 4,
+      "marketDemand": 6,
+      "learningDifficulty": 3
+    },
+    {
+      "name": "Oracle",
+      "aliases": ["Oracle Database", "oracle"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 6,
+      "rarity": 6,
+      "marketDemand": 7,
+      "learningDifficulty": 8
+    },
+    {
+      "name": "SQL Server",
+      "aliases": ["MSSQL", "Microsoft SQL Server", "sqlserver"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 6,
+      "rarity": 5,
+      "marketDemand": 7,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "Elasticsearch",
+      "aliases": ["elasticsearch", "ES", "elastic"],
+      "category": "数据库",
+      "variants": [],
+      "weight": 6,
+      "rarity": 6,
+      "marketDemand": 7,
+      "learningDifficulty": 7
+    }
+  ],
+  "cloudPlatforms": [
+    {
+      "name": "AWS",
+      "aliases": ["Amazon Web Services", "aws"],
+      "category": "云计算",
+      "variants": [
+        { "name": "EC2", "aliases": [], "context": "云服务器" },
+        { "name": "S3", "aliases": [], "context": "对象存储" },
+        { "name": "RDS", "aliases": [], "context": "数据库服务" },
+        { "name": "Lambda", "aliases": [], "context": "无服务器计算" },
+        { "name": "CloudFormation", "aliases": [], "context": "基础设施即代码" }
+      ],
+      "weight": 8,
+      "rarity": 4,
+      "marketDemand": 9,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "Azure",
+      "aliases": ["Microsoft Azure", "azure"],
+      "category": "云计算",
+      "variants": [],
+      "weight": 7,
+      "rarity": 5,
+      "marketDemand": 8,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "Google Cloud",
+      "aliases": ["GCP", "Google Cloud Platform", "gcp"],
+      "category": "云计算",
+      "variants": [],
+      "weight": 7,
+      "rarity": 5,
+      "marketDemand": 8,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "阿里云",
+      "aliases": ["Alibaba Cloud", "aliyun"],
+      "category": "云计算",
+      "variants": [],
+      "weight": 6,
+      "rarity": 4,
+      "marketDemand": 8,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "腾讯云",
+      "aliases": ["Tencent Cloud", "qcloud"],
+      "category": "云计算",
+      "variants": [],
+      "weight": 6,
+      "rarity": 4,
+      "marketDemand": 7,
+      "learningDifficulty": 6
+    }
+  ],
+  "devTools": [
+    {
+      "name": "Docker",
+      "aliases": ["docker"],
+      "category": "开发工具",
+      "variants": [
+        { "name": "Docker Compose", "aliases": ["docker-compose"], "context": "容器编排" }
+      ],
+      "weight": 8,
+      "rarity": 3,
+      "marketDemand": 9,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Kubernetes",
+      "aliases": ["k8s", "kubernetes"],
+      "category": "开发工具",
+      "variants": [],
+      "weight": 7,
+      "rarity": 6,
+      "marketDemand": 8,
+      "learningDifficulty": 8
+    },
+    {
+      "name": "Git",
+      "aliases": ["git"],
+      "category": "版本控制",
+      "variants": [
+        { "name": "GitHub", "aliases": ["github"], "context": "代码托管" },
+        { "name": "GitLab", "aliases": ["gitlab"], "context": "代码托管" }
+      ],
+      "weight": 9,
+      "rarity": 1,
+      "marketDemand": 10,
+      "learningDifficulty": 4
+    },
+    {
+      "name": "Jenkins",
+      "aliases": ["jenkins"],
+      "category": "运维部署",
+      "variants": [],
+      "weight": 6,
+      "rarity": 5,
+      "marketDemand": 7,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Webpack",
+      "aliases": ["webpack"],
+      "category": "开发工具",
+      "variants": [
+        { "name": "Webpack 5", "aliases": [], "version": "5" }
+      ],
+      "weight": 6,
+      "rarity": 4,
+      "marketDemand": 7,
+      "learningDifficulty": 7
+    },
+    {
+      "name": "Vite",
+      "aliases": ["vite"],
+      "category": "开发工具",
+      "variants": [],
+      "weight": 6,
+      "rarity": 5,
+      "marketDemand": 7,
+      "learningDifficulty": 4
+    }
+  ],
+  "testingTools": [
+    {
+      "name": "Jest",
+      "aliases": ["jest"],
+      "category": "测试工具",
+      "variants": [],
+      "weight": 6,
+      "rarity": 4,
+      "marketDemand": 7,
+      "learningDifficulty": 5
+    },
+    {
+      "name": "Cypress",
+      "aliases": ["cypress"],
+      "category": "测试工具",
+      "variants": [],
+      "weight": 5,
+      "rarity": 6,
+      "marketDemand": 6,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "Selenium",
+      "aliases": ["selenium"],
+      "category": "测试工具",
+      "variants": [],
+      "weight": 5,
+      "rarity": 5,
+      "marketDemand": 6,
+      "learningDifficulty": 6
+    },
+    {
+      "name": "JUnit",
+      "aliases": ["junit"],
+      "category": "测试工具",
+      "variants": [],
+      "weight": 5,
+      "rarity": 4,
+      "marketDemand": 7,
+      "learningDifficulty": 5
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 // Resume 相关类型
 export * from './resume.types';
 
-// Job 相关类型  
+// Job 相关类型
 export * from './job.types';
 
 // Analysis 相关类型
@@ -12,11 +12,23 @@ export * from './analysis.types';
 // API 相关类型
 export * from './api.types';
 
+// Grammar Issue 相关类型
+export * from './grammar-issue.types';
+
 // Repository 基础类型（从 repository 文件重新导出）
-export type { Resume, CreateResumeData } from '../repositories/resume.repository';
+export type {
+  Resume,
+  CreateResumeData,
+} from '../repositories/resume.repository';
 export type { Job, CreateJobData } from '../repositories/job.repository';
-export type { Analysis, CreateAnalysisData } from '../repositories/analysis.repository';
-export type { JobMatch, CreateJobMatchData } from '../repositories/match.repository';
+export type {
+  Analysis,
+  CreateAnalysisData,
+} from '../repositories/analysis.repository';
+export type {
+  JobMatch,
+  CreateJobMatchData,
+} from '../repositories/match.repository';
 
 // Database 相关类型
 export interface IDatabaseConfig {
@@ -142,19 +154,41 @@ export interface IAppConfig {
 
 // 重新导出常用的枚举和常量类型
 export const FILE_TYPES = ['pdf', 'markdown', 'txt'] as const;
-export type FileType = typeof FILE_TYPES[number];
+export type FileType = (typeof FILE_TYPES)[number];
 
-export const ANALYSIS_TYPES = ['star_check', 'optimization', 'grammar_check', 'custom'] as const;
-export type AnalysisTypeEnum = typeof ANALYSIS_TYPES[number];
+export const ANALYSIS_TYPES = [
+  'star_check',
+  'optimization',
+  'grammar_check',
+  'custom',
+] as const;
+export type AnalysisTypeEnum = (typeof ANALYSIS_TYPES)[number];
 
-export const AI_PROVIDERS = ['openrouter', 'deepseek', 'openai', 'anthropic'] as const;
-export type AiProvider = typeof AI_PROVIDERS[number];
+export const AI_PROVIDERS = [
+  'openrouter',
+  'deepseek',
+  'openai',
+  'anthropic',
+] as const;
+export type AiProvider = (typeof AI_PROVIDERS)[number];
 
 export const LOG_LEVELS = ['debug', 'info', 'warn', 'error'] as const;
-export type LogLevel = typeof LOG_LEVELS[number];
+export type LogLevel = (typeof LOG_LEVELS)[number];
 
-export const ENTITY_TYPES = ['resume', 'job', 'analysis', 'match', 'custom_prompt'] as const;
-export type EntityType = typeof ENTITY_TYPES[number];
+export const ENTITY_TYPES = [
+  'resume',
+  'job',
+  'analysis',
+  'match',
+  'custom_prompt',
+] as const;
+export type EntityType = (typeof ENTITY_TYPES)[number];
 
-export const ACTIONS = ['created', 'updated', 'deleted', 'analyzed', 'matched'] as const;
-export type Action = typeof ACTIONS[number];
+export const ACTIONS = [
+  'created',
+  'updated',
+  'deleted',
+  'analyzed',
+  'matched',
+] as const;
+export type Action = (typeof ACTIONS)[number];

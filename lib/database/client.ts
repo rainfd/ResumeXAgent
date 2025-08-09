@@ -10,13 +10,19 @@ export interface DatabaseOptions {
   verbose?: (message?: unknown, ...additionalArgs: unknown[]) => void;
 }
 
-export function initializeDatabase(dbPath?: string, options: DatabaseOptions = {}): Database.Database {
+export function initializeDatabase(
+  dbPath?: string,
+  options: DatabaseOptions = {}
+): Database.Database {
   if (database) {
     return database;
   }
 
-  const databasePath = dbPath || process.env.DATABASE_PATH || path.join(process.cwd(), 'data', 'database', 'resume.db');
-  
+  const databasePath =
+    dbPath ||
+    process.env.DATABASE_PATH ||
+    path.join(process.cwd(), 'data', 'database', 'resume.db');
+
   // 确保数据库目录存在
   const dbDirectory = path.dirname(databasePath);
   const fs = require('fs');
@@ -39,7 +45,9 @@ export function initializeDatabase(dbPath?: string, options: DatabaseOptions = {
 
     return database;
   } catch (error) {
-    throw new Error(`Failed to initialize database: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to initialize database: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 }
 
@@ -62,5 +70,8 @@ export function isDatabaseOpen(): boolean {
 }
 
 export function getDatabasePath(): string {
-  return process.env.DATABASE_PATH || path.join(process.cwd(), 'data', 'database', 'resume.db');
+  return (
+    process.env.DATABASE_PATH ||
+    path.join(process.cwd(), 'data', 'database', 'resume.db')
+  );
 }

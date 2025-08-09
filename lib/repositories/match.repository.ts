@@ -31,7 +31,11 @@ export interface CreateJobMatchData {
 
 export class MatchRepository extends BaseRepository<JobMatch> {
   constructor() {
-    super('job_matches', validationSchemas.createMatch, validationSchemas.createMatch);
+    super(
+      'job_matches',
+      validationSchemas.createMatch,
+      validationSchemas.createMatch
+    );
   }
 
   public create(data: CreateJobMatchData): JobMatch {
@@ -74,16 +78,20 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       return created;
     } catch (error) {
       if (error instanceof Error && error.message.includes('UNIQUE')) {
-        throw new Error('Match already exists for this resume and job combination');
+        throw new Error(
+          'Match already exists for this resume and job combination'
+        );
       }
-      throw new Error(`Failed to create job match: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create job match: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   public findById(id: string): JobMatch | null {
     const stmt = this.db.prepare('SELECT * FROM job_matches WHERE id = ?');
     const result = stmt.get(id) as any;
-    
+
     if (!result) return null;
 
     return this.mapRowToJobMatch(result);
@@ -95,27 +103,33 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       ORDER BY created_at DESC 
       LIMIT ? OFFSET ?
     `);
-    
+
     const results = stmt.all(limit, offset) as any[];
-    return results.map(row => this.mapRowToJobMatch(row));
+    return results.map((row) => this.mapRowToJobMatch(row));
   }
 
   public findByResumeId(resumeId: string): JobMatch[] {
-    const stmt = this.db.prepare('SELECT * FROM job_matches WHERE resume_id = ? ORDER BY match_score DESC, created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM job_matches WHERE resume_id = ? ORDER BY match_score DESC, created_at DESC'
+    );
     const results = stmt.all(resumeId) as any[];
-    return results.map(row => this.mapRowToJobMatch(row));
+    return results.map((row) => this.mapRowToJobMatch(row));
   }
 
   public findByJobId(jobId: string): JobMatch[] {
-    const stmt = this.db.prepare('SELECT * FROM job_matches WHERE job_id = ? ORDER BY match_score DESC, created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM job_matches WHERE job_id = ? ORDER BY match_score DESC, created_at DESC'
+    );
     const results = stmt.all(jobId) as any[];
-    return results.map(row => this.mapRowToJobMatch(row));
+    return results.map((row) => this.mapRowToJobMatch(row));
   }
 
   public findByResumeAndJob(resumeId: string, jobId: string): JobMatch | null {
-    const stmt = this.db.prepare('SELECT * FROM job_matches WHERE resume_id = ? AND job_id = ?');
+    const stmt = this.db.prepare(
+      'SELECT * FROM job_matches WHERE resume_id = ? AND job_id = ?'
+    );
     const result = stmt.get(resumeId, jobId) as any;
-    
+
     if (!result) return null;
     return this.mapRowToJobMatch(result);
   }
@@ -128,7 +142,7 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       LIMIT ?
     `);
     const results = stmt.all(resumeId, limit) as any[];
-    return results.map(row => this.mapRowToJobMatch(row));
+    return results.map((row) => this.mapRowToJobMatch(row));
   }
 
   public findByScoreRange(minScore: number, maxScore: number): JobMatch[] {
@@ -138,7 +152,7 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       ORDER BY match_score DESC, created_at DESC
     `);
     const results = stmt.all(minScore, maxScore) as any[];
-    return results.map(row => this.mapRowToJobMatch(row));
+    return results.map((row) => this.mapRowToJobMatch(row));
   }
 
   public findHighScoreMatches(minScore = 80): JobMatch[] {
@@ -148,15 +162,21 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       ORDER BY match_score DESC, created_at DESC
     `);
     const results = stmt.all(minScore) as any[];
-    return results.map(row => this.mapRowToJobMatch(row));
+    return results.map((row) => this.mapRowToJobMatch(row));
   }
 
-  public update(id: string, data: Partial<CreateJobMatchData>): JobMatch | null {
+  public update(
+    id: string,
+    data: Partial<CreateJobMatchData>
+  ): JobMatch | null {
     const existing = this.findById(id);
     if (!existing) return null;
 
     // 验证匹配分数范围
-    if (data.match_score !== undefined && (data.match_score < 0 || data.match_score > 100)) {
+    if (
+      data.match_score !== undefined &&
+      (data.match_score < 0 || data.match_score > 100)
+    ) {
       throw new Error('Match score must be between 0 and 100');
     }
 
@@ -215,7 +235,9 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       stmt.run(...updateValues);
       return this.findById(id);
     } catch (error) {
-      throw new Error(`Failed to update job match: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to update job match: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -225,7 +247,9 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       const result = stmt.run(id);
       return result.changes > 0;
     } catch (error) {
-      throw new Error(`Failed to delete job match: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete job match: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -235,7 +259,9 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       const result = stmt.run(resumeId);
       return result.changes;
     } catch (error) {
-      throw new Error(`Failed to delete job matches by resume: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete job matches by resume: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -245,7 +271,9 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       const result = stmt.run(jobId);
       return result.changes;
     } catch (error) {
-      throw new Error(`Failed to delete job matches by job: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete job matches by job: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -256,7 +284,9 @@ export class MatchRepository extends BaseRepository<JobMatch> {
   }
 
   public getAverageScore(): number {
-    const stmt = this.db.prepare('SELECT AVG(match_score) as avg_score FROM job_matches');
+    const stmt = this.db.prepare(
+      'SELECT AVG(match_score) as avg_score FROM job_matches'
+    );
     const result = stmt.get() as { avg_score: number | null };
     return result.avg_score || 0;
   }
@@ -293,7 +323,7 @@ export class MatchRepository extends BaseRepository<JobMatch> {
       gaps: this.deserializeJson(row.gaps),
       recommendations: this.deserializeJson(row.recommendations),
       hr_message: row.hr_message,
-      created_at: row.created_at
+      created_at: row.created_at,
     };
   }
 }

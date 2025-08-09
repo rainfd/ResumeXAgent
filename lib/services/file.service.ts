@@ -47,7 +47,7 @@ export class FileService {
    */
   validateFileType(filename: string, mimeType?: string): boolean {
     const extension = path.extname(filename).toLowerCase();
-    
+
     // 检查文件扩展名
     if (!this.allowedTypes.includes(extension)) {
       return false;
@@ -92,12 +92,12 @@ export class FileService {
       // TODO: 从数据库获取文件信息
       // const fileInfo = await resumeRepository.getById(fileId);
       // if (!fileInfo) return null;
-      
+
       // 临时实现：直接从文件系统读取
       // 在实际实现中应该从数据库获取filename
       const files = await this.listUploadedFiles();
-      const targetFile = files.find(f => f.includes(fileId));
-      
+      const targetFile = files.find((f) => f.includes(fileId));
+
       if (!targetFile) {
         return null;
       }
@@ -146,7 +146,7 @@ export class FileService {
     try {
       const filePath = this.getFilePath(filename);
       const stats = await stat(filePath);
-      
+
       return {
         id: path.basename(filename, path.extname(filename)),
         originalFilename: filename,
@@ -170,7 +170,7 @@ export class FileService {
     try {
       const fs = require('fs').promises;
       const files = await fs.readdir(this.uploadDir);
-      return files.filter((file: string) => 
+      return files.filter((file: string) =>
         this.allowedTypes.includes(path.extname(file).toLowerCase())
       );
     } catch (error) {
@@ -192,7 +192,7 @@ export class FileService {
 
       for (const filename of files) {
         const fileInfo = await this.getFileInfo(filename);
-        if (fileInfo && (now - fileInfo.createdAt.getTime()) > maxAge) {
+        if (fileInfo && now - fileInfo.createdAt.getTime() > maxAge) {
           const deleted = await this.deleteFile(filename);
           if (deleted) {
             deletedCount++;
@@ -202,7 +202,7 @@ export class FileService {
 
       // TODO: Use logger service
       // logger.info('Cleanup completed', { deletedCount, maxAgeHours });
-      
+
       return deletedCount;
     } catch (error) {
       // TODO: Use logger service

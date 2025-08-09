@@ -25,7 +25,11 @@ export interface CreateAnalysisData {
 
 export class AnalysisRepository extends BaseRepository<Analysis> {
   constructor() {
-    super('analyses', validationSchemas.createAnalysis, validationSchemas.createAnalysis);
+    super(
+      'analyses',
+      validationSchemas.createAnalysis,
+      validationSchemas.createAnalysis
+    );
   }
 
   public create(data: CreateAnalysisData): Analysis {
@@ -58,14 +62,16 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       }
       return created;
     } catch (error) {
-      throw new Error(`Failed to create analysis: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create analysis: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   public findById(id: string): Analysis | null {
     const stmt = this.db.prepare('SELECT * FROM analyses WHERE id = ?');
     const result = stmt.get(id) as any;
-    
+
     if (!result) return null;
 
     return this.mapRowToAnalysis(result);
@@ -77,42 +83,57 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       ORDER BY created_at DESC 
       LIMIT ? OFFSET ?
     `);
-    
+
     const results = stmt.all(limit, offset) as any[];
-    return results.map(row => this.mapRowToAnalysis(row));
+    return results.map((row) => this.mapRowToAnalysis(row));
   }
 
   public findByResumeId(resumeId: string): Analysis[] {
-    const stmt = this.db.prepare('SELECT * FROM analyses WHERE resume_id = ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM analyses WHERE resume_id = ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(resumeId) as any[];
-    return results.map(row => this.mapRowToAnalysis(row));
+    return results.map((row) => this.mapRowToAnalysis(row));
   }
 
   public findByJobId(jobId: string): Analysis[] {
-    const stmt = this.db.prepare('SELECT * FROM analyses WHERE job_id = ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM analyses WHERE job_id = ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(jobId) as any[];
-    return results.map(row => this.mapRowToAnalysis(row));
+    return results.map((row) => this.mapRowToAnalysis(row));
   }
 
-  public findByType(analysisType: 'star_check' | 'optimization' | 'grammar_check' | 'custom'): Analysis[] {
-    const stmt = this.db.prepare('SELECT * FROM analyses WHERE analysis_type = ? ORDER BY created_at DESC');
+  public findByType(
+    analysisType: 'star_check' | 'optimization' | 'grammar_check' | 'custom'
+  ): Analysis[] {
+    const stmt = this.db.prepare(
+      'SELECT * FROM analyses WHERE analysis_type = ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(analysisType) as any[];
-    return results.map(row => this.mapRowToAnalysis(row));
+    return results.map((row) => this.mapRowToAnalysis(row));
   }
 
   public findByModel(aiModel: string): Analysis[] {
-    const stmt = this.db.prepare('SELECT * FROM analyses WHERE ai_model = ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM analyses WHERE ai_model = ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(aiModel) as any[];
-    return results.map(row => this.mapRowToAnalysis(row));
+    return results.map((row) => this.mapRowToAnalysis(row));
   }
 
   public findByResumeAndJob(resumeId: string, jobId: string): Analysis[] {
-    const stmt = this.db.prepare('SELECT * FROM analyses WHERE resume_id = ? AND job_id = ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM analyses WHERE resume_id = ? AND job_id = ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(resumeId, jobId) as any[];
-    return results.map(row => this.mapRowToAnalysis(row));
+    return results.map((row) => this.mapRowToAnalysis(row));
   }
 
-  public findLatestByResumeAndType(resumeId: string, analysisType: string): Analysis | null {
+  public findLatestByResumeAndType(
+    resumeId: string,
+    analysisType: string
+  ): Analysis | null {
     const stmt = this.db.prepare(`
       SELECT * FROM analyses 
       WHERE resume_id = ? AND analysis_type = ? 
@@ -120,12 +141,15 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       LIMIT 1
     `);
     const result = stmt.get(resumeId, analysisType) as any;
-    
+
     if (!result) return null;
     return this.mapRowToAnalysis(result);
   }
 
-  public update(id: string, data: Partial<CreateAnalysisData>): Analysis | null {
+  public update(
+    id: string,
+    data: Partial<CreateAnalysisData>
+  ): Analysis | null {
     const existing = this.findById(id);
     if (!existing) return null;
 
@@ -172,7 +196,9 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       stmt.run(...updateValues);
       return this.findById(id);
     } catch (error) {
-      throw new Error(`Failed to update analysis: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to update analysis: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -182,7 +208,9 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       const result = stmt.run(id);
       return result.changes > 0;
     } catch (error) {
-      throw new Error(`Failed to delete analysis: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete analysis: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -192,7 +220,9 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       const result = stmt.run(resumeId);
       return result.changes;
     } catch (error) {
-      throw new Error(`Failed to delete analyses by resume: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete analyses by resume: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -203,7 +233,9 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
   }
 
   public getAnalyticsByType(): { analysis_type: string; count: number }[] {
-    const stmt = this.db.prepare('SELECT analysis_type, COUNT(*) as count FROM analyses GROUP BY analysis_type ORDER BY count DESC');
+    const stmt = this.db.prepare(
+      'SELECT analysis_type, COUNT(*) as count FROM analyses GROUP BY analysis_type ORDER BY count DESC'
+    );
     return stmt.all() as { analysis_type: string; count: number }[];
   }
 
@@ -217,7 +249,7 @@ export class AnalysisRepository extends BaseRepository<Analysis> {
       results: this.deserializeJson(row.results),
       suggestions: this.deserializeJson(row.suggestions),
       score: row.score,
-      created_at: row.created_at
+      created_at: row.created_at,
     };
   }
 }

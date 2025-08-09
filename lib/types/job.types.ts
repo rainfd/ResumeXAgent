@@ -177,11 +177,11 @@ export interface IJobStats {
 
 // Job 匹配评分相关类型
 export interface IJobScoring {
-  skillMatch: number;      // 0-100
+  skillMatch: number; // 0-100
   experienceMatch: number; // 0-100
-  educationMatch: number;  // 0-100
-  locationMatch?: number;  // 0-100
-  cultureMatch?: number;   // 0-100
+  educationMatch: number; // 0-100
+  locationMatch?: number; // 0-100
+  cultureMatch?: number; // 0-100
 }
 
 export interface IJobMatchCriteria {

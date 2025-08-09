@@ -128,7 +128,8 @@ export interface IJobMatchData {
 
 export interface IJobMatchResponse extends IApiResponse<IJobMatchData> {}
 
-export interface IJobMatchListResponse extends IApiResponse<IApiListResponse<IJobMatchData>> {}
+export interface IJobMatchListResponse
+  extends IApiResponse<IApiListResponse<IJobMatchData>> {}
 
 // Custom Prompt 相关类型
 export interface ICustomPromptData {
@@ -151,13 +152,16 @@ export interface ICreateCustomPromptRequest {
   category?: string;
 }
 
-export interface IUpdateCustomPromptRequest extends Partial<ICreateCustomPromptRequest> {
+export interface IUpdateCustomPromptRequest
+  extends Partial<ICreateCustomPromptRequest> {
   id: string;
 }
 
-export interface ICustomPromptResponse extends IApiResponse<ICustomPromptData> {}
+export interface ICustomPromptResponse
+  extends IApiResponse<ICustomPromptData> {}
 
-export interface ICustomPromptListResponse extends IApiResponse<IApiListResponse<ICustomPromptData>> {}
+export interface ICustomPromptListResponse
+  extends IApiResponse<IApiListResponse<ICustomPromptData>> {}
 
 // AI 模型和配置相关类型
 export interface IAiModelConfig {

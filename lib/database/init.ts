@@ -16,27 +16,38 @@ export async function initializeApp(): Promise<InitializationResult> {
     message: '',
     tablesCreated: [],
     migrationsApplied: 0,
-    errors: []
+    errors: [],
   };
 
   try {
     // 1. 初始化数据库连接
     const db = initializeDatabase();
-    
+
     // 2. 检查数据库健康状态
     const health = await dbHelpers.checkHealth();
     if (!health.isOpen || !health.canRead || !health.canWrite) {
-      throw new Error(`Database health check failed: ${health.lastError || 'Unknown error'}`);
+      throw new Error(
+        `Database health check failed: ${health.lastError || 'Unknown error'}`
+      );
     }
 
     // 3. 运行数据库迁移
     await runMigrations();
-    
+
     // 4. 验证表创建
     const tables = dbHelpers.getTableNames();
-    const expectedTables = ['resumes', 'jobs', 'analyses', 'job_matches', 'custom_prompts', 'migrations'];
-    
-    const missingTables = expectedTables.filter(table => !tables.includes(table));
+    const expectedTables = [
+      'resumes',
+      'jobs',
+      'analyses',
+      'job_matches',
+      'custom_prompts',
+      'migrations',
+    ];
+
+    const missingTables = expectedTables.filter(
+      (table) => !tables.includes(table)
+    );
     if (missingTables.length > 0) {
       throw new Error(`Missing tables: ${missingTables.join(', ')}`);
     }
@@ -44,15 +55,18 @@ export async function initializeApp(): Promise<InitializationResult> {
     result.tablesCreated = tables;
     result.success = true;
     result.message = 'Database initialized successfully';
-    
-    // 5. 获取应用的迁移数量
-    const migrationStatus = getDatabase().prepare('SELECT COUNT(*) as count FROM migrations').get() as { count: number };
-    result.migrationsApplied = migrationStatus.count;
 
+    // 5. 获取应用的迁移数量
+    const migrationStatus = getDatabase()
+      .prepare('SELECT COUNT(*) as count FROM migrations')
+      .get() as { count: number };
+    result.migrationsApplied = migrationStatus.count;
   } catch (error) {
     result.success = false;
     result.message = 'Database initialization failed';
-    result.errors.push(error instanceof Error ? error.message : 'Unknown initialization error');
+    result.errors.push(
+      error instanceof Error ? error.message : 'Unknown initialization error'
+    );
   }
 
   return result;
@@ -60,9 +74,13 @@ export async function initializeApp(): Promise<InitializationResult> {
 
 export async function seedDatabase(): Promise<void> {
   // 创建种子数据用于开发和测试
-  const { ResumeRepository } = await import('../repositories/resume.repository');
+  const { ResumeRepository } = await import(
+    '../repositories/resume.repository'
+  );
   const { JobRepository } = await import('../repositories/job.repository');
-  const { AnalysisRepository } = await import('../repositories/analysis.repository');
+  const { AnalysisRepository } = await import(
+    '../repositories/analysis.repository'
+  );
 
   try {
     const resumeRepo = new ResumeRepository();
@@ -102,16 +120,16 @@ Skills:
       basic_info: {
         name: 'John Doe',
         email: 'john.doe@email.com',
-        phone: '(555) 123-4567'
+        phone: '(555) 123-4567',
       },
       skills: {
         technical: {
           programming: ['JavaScript', 'TypeScript', 'Python', 'Java'],
           frameworks: ['React', 'Node.js', 'Express', 'Django'],
           databases: ['PostgreSQL', 'MongoDB', 'Redis'],
-          tools: ['Docker', 'Kubernetes', 'Git', 'Jenkins']
-        }
-      }
+          tools: ['Docker', 'Kubernetes', 'Git', 'Jenkins'],
+        },
+      },
     });
 
     // 创建示例岗位
@@ -136,8 +154,21 @@ Requirements:
 - Experience with databases (PostgreSQL, MongoDB)
 - Knowledge of cloud platforms (AWS, GCP)
 - Strong communication and problem-solving skills`,
-      technical_skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'PostgreSQL', 'MongoDB', 'AWS'],
-      soft_skills: ['Communication', 'Problem-solving', 'Team collaboration', 'Mentoring']
+      technical_skills: [
+        'JavaScript',
+        'TypeScript',
+        'React',
+        'Node.js',
+        'PostgreSQL',
+        'MongoDB',
+        'AWS',
+      ],
+      soft_skills: [
+        'Communication',
+        'Problem-solving',
+        'Team collaboration',
+        'Mentoring',
+      ],
     });
 
     // 创建示例分析
@@ -149,25 +180,26 @@ Requirements:
         keywords: {
           present: ['JavaScript', 'Node.js', 'React', 'Python'],
           missing: ['AWS', 'Microservices', 'CI/CD'],
-          suggested: ['Kubernetes', 'Docker', 'TypeScript']
+          suggested: ['Kubernetes', 'Docker', 'TypeScript'],
         },
         structure: {
           hasContactInfo: true,
           hasExperience: true,
           hasSkills: true,
-          score: 85
-        }
+          score: 85,
+        },
       },
       suggestions: {
         immediate: ['Add AWS experience to skills section'],
         shortTerm: ['Include more specific metrics in experience descriptions'],
-        longTerm: ['Consider adding a professional summary section']
+        longTerm: ['Consider adding a professional summary section'],
       },
-      score: 85
+      score: 85,
     });
-
   } catch (error) {
-    throw new Error(`Failed to seed database: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to seed database: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 }
 
@@ -180,12 +212,13 @@ export async function resetDatabase(): Promise<void> {
   try {
     // 清空所有表数据
     dbHelpers.truncateAllTables();
-    
+
     // 重新运行迁移
     await runMigrations();
-    
   } catch (error) {
-    throw new Error(`Failed to reset database: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to reset database: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 }
 

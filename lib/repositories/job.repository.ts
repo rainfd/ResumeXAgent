@@ -78,14 +78,16 @@ export class JobRepository extends BaseRepository<Job> {
       }
       return created;
     } catch (error) {
-      throw new Error(`Failed to create job: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to create job: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   public findById(id: string): Job | null {
     const stmt = this.db.prepare('SELECT * FROM jobs WHERE id = ?');
     const result = stmt.get(id) as any;
-    
+
     if (!result) return null;
 
     return this.mapRowToJob(result);
@@ -97,33 +99,39 @@ export class JobRepository extends BaseRepository<Job> {
       ORDER BY created_at DESC 
       LIMIT ? OFFSET ?
     `);
-    
+
     const results = stmt.all(limit, offset) as any[];
-    return results.map(row => this.mapRowToJob(row));
+    return results.map((row) => this.mapRowToJob(row));
   }
 
   public findByCompany(company: string): Job[] {
-    const stmt = this.db.prepare('SELECT * FROM jobs WHERE company = ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM jobs WHERE company = ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(company) as any[];
-    return results.map(row => this.mapRowToJob(row));
+    return results.map((row) => this.mapRowToJob(row));
   }
 
   public findByTitle(title: string): Job[] {
-    const stmt = this.db.prepare('SELECT * FROM jobs WHERE title LIKE ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM jobs WHERE title LIKE ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(`%${title}%`) as any[];
-    return results.map(row => this.mapRowToJob(row));
+    return results.map((row) => this.mapRowToJob(row));
   }
 
   public findByLocation(location: string): Job[] {
-    const stmt = this.db.prepare('SELECT * FROM jobs WHERE location LIKE ? ORDER BY created_at DESC');
+    const stmt = this.db.prepare(
+      'SELECT * FROM jobs WHERE location LIKE ? ORDER BY created_at DESC'
+    );
     const results = stmt.all(`%${location}%`) as any[];
-    return results.map(row => this.mapRowToJob(row));
+    return results.map((row) => this.mapRowToJob(row));
   }
 
   public findByUrl(url: string): Job | null {
     const stmt = this.db.prepare('SELECT * FROM jobs WHERE url = ?');
     const result = stmt.get(url) as any;
-    
+
     if (!result) return null;
     return this.mapRowToJob(result);
   }
@@ -135,8 +143,12 @@ export class JobRepository extends BaseRepository<Job> {
       ORDER BY created_at DESC
     `);
     const searchPattern = `%${query}%`;
-    const results = stmt.all(searchPattern, searchPattern, searchPattern) as any[];
-    return results.map(row => this.mapRowToJob(row));
+    const results = stmt.all(
+      searchPattern,
+      searchPattern,
+      searchPattern
+    ) as any[];
+    return results.map((row) => this.mapRowToJob(row));
   }
 
   public update(id: string, data: Partial<CreateJobData>): Job | null {
@@ -210,7 +222,9 @@ export class JobRepository extends BaseRepository<Job> {
       stmt.run(...updateValues);
       return this.findById(id);
     } catch (error) {
-      throw new Error(`Failed to update job: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to update job: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -220,7 +234,9 @@ export class JobRepository extends BaseRepository<Job> {
       const result = stmt.run(id);
       return result.changes > 0;
     } catch (error) {
-      throw new Error(`Failed to delete job: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to delete job: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -246,7 +262,7 @@ export class JobRepository extends BaseRepository<Job> {
       soft_skills: this.deserializeJson(row.soft_skills),
       responsibilities: this.deserializeJson(row.responsibilities),
       company_info: this.deserializeJson(row.company_info),
-      created_at: row.created_at
+      created_at: row.created_at,
     };
   }
 }

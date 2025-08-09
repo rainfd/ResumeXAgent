@@ -5,6 +5,14 @@
     "prettier/prettier": "error",
     "no-console": "error"
   },
+  "overrides": [
+    {
+      "files": ["lib/utils/logger.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"

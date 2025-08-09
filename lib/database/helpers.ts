@@ -25,11 +25,11 @@ export class DatabaseHelpers {
    */
   private readonly allowedTables = [
     'resumes',
-    'jobs', 
+    'jobs',
     'analyses',
     'job_matches',
     'custom_prompts',
-    'migrations'
+    'migrations',
   ] as const;
 
   /**
@@ -37,10 +37,12 @@ export class DatabaseHelpers {
    */
   private validateTableName(tableName: string): void {
     if (!this.allowedTables.includes(tableName as any)) {
-      const error = new Error(`Invalid table name: ${tableName}. Allowed tables: ${this.allowedTables.join(', ')}`);
-      logger.error('SQL injection attempt blocked', 'SECURITY', error, { 
-        attemptedTable: tableName, 
-        allowedTables: this.allowedTables 
+      const error = new Error(
+        `Invalid table name: ${tableName}. Allowed tables: ${this.allowedTables.join(', ')}`
+      );
+      logger.error('SQL injection attempt blocked', 'SECURITY', error, {
+        attemptedTable: tableName,
+        allowedTables: this.allowedTables,
       });
       throw error;
     }
@@ -54,7 +56,7 @@ export class DatabaseHelpers {
       isOpen: isDatabaseOpen(),
       canRead: false,
       canWrite: false,
-      tablesExist: false
+      tablesExist: false,
     };
 
     try {
@@ -69,33 +71,51 @@ export class DatabaseHelpers {
         health.canRead = true;
       } catch (error) {
         health.lastError = `Read test failed: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        logger.error('Database read test failed', 'DATABASE', error instanceof Error ? error : undefined);
+        logger.error(
+          'Database read test failed',
+          'DATABASE',
+          error instanceof Error ? error : undefined
+        );
         return health;
       }
 
       // 测试写入操作
       try {
-        this.db.prepare('CREATE TEMP TABLE IF NOT EXISTS health_check (id INTEGER)').run();
+        this.db
+          .prepare('CREATE TEMP TABLE IF NOT EXISTS health_check (id INTEGER)')
+          .run();
         this.db.prepare('INSERT INTO temp.health_check (id) VALUES (1)').run();
         this.db.prepare('DROP TABLE temp.health_check').run();
         health.canWrite = true;
       } catch (error) {
         health.lastError = `Write test failed: ${error instanceof Error ? error.message : 'Unknown error'}`;
-        logger.error('Database write test failed', 'DATABASE', error instanceof Error ? error : undefined);
+        logger.error(
+          'Database write test failed',
+          'DATABASE',
+          error instanceof Error ? error : undefined
+        );
         return health;
       }
 
       // 检查核心表是否存在
       try {
         const tables = this.getTableNames();
-        const requiredTables = ['resumes', 'jobs', 'analyses', 'job_matches', 'custom_prompts'];
-        health.tablesExist = requiredTables.every(table => tables.includes(table));
+        const requiredTables = [
+          'resumes',
+          'jobs',
+          'analyses',
+          'job_matches',
+          'custom_prompts',
+        ];
+        health.tablesExist = requiredTables.every((table) =>
+          tables.includes(table)
+        );
       } catch (error) {
         health.lastError = `Table check failed: ${error instanceof Error ? error.message : 'Unknown error'}`;
       }
-
     } catch (error) {
-      health.lastError = error instanceof Error ? error.message : 'Unknown health check error';
+      health.lastError =
+        error instanceof Error ? error.message : 'Unknown health check error';
     }
 
     return health;
@@ -105,9 +125,11 @@ export class DatabaseHelpers {
    * 获取数据库中所有表名
    */
   public getTableNames(): string[] {
-    const stmt = this.db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+    const stmt = this.db.prepare(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+    );
     const tables = stmt.all() as { name: string }[];
-    return tables.map(table => table.name);
+    return tables.map((table) => table.name);
   }
 
   /**
@@ -116,15 +138,17 @@ export class DatabaseHelpers {
   public getTableRowCount(tableName: string): number {
     // 验证表名，防止 SQL 注入
     this.validateTableName(tableName);
-    
-    const stmt = this.db.prepare(`SELECT COUNT(*) as count FROM "${tableName}"`);
+
+    const stmt = this.db.prepare(
+      `SELECT COUNT(*) as count FROM "${tableName}"`
+    );
     const result = stmt.get() as { count: number };
-    
-    logger.debug(`Got row count for table ${tableName}`, 'DATABASE', { 
-      table: tableName, 
-      count: result.count 
+
+    logger.debug(`Got row count for table ${tableName}`, 'DATABASE', {
+      table: tableName,
+      count: result.count,
     });
-    
+
     return result.count;
   }
 
@@ -134,8 +158,8 @@ export class DatabaseHelpers {
   public getDatabaseStats(): Record<string, number> {
     const tables = this.getTableNames();
     const stats: Record<string, number> = {};
-    
-    tables.forEach(table => {
+
+    tables.forEach((table) => {
       try {
         stats[table] = this.getTableRowCount(table);
       } catch (error) {
@@ -154,7 +178,7 @@ export class DatabaseHelpers {
     options: TransactionOptions = {}
   ): T {
     const transaction = this.db.transaction(operations);
-    
+
     if (options.immediate) {
       return transaction.immediate(this.db);
     } else if (options.exclusive) {
@@ -189,9 +213,10 @@ export class DatabaseHelpers {
   public async backup(backupPath: string): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        this.db.backup(backupPath)
+        this.db
+          .backup(backupPath)
           .then(() => resolve())
-          .catch(error => reject(error));
+          .catch((error) => reject(error));
       } catch (error) {
         reject(error);
       }
@@ -216,7 +241,9 @@ export class DatabaseHelpers {
    * 获取数据库文件大小（字节）
    */
   public getDatabaseSize(): number {
-    const stmt = this.db.prepare('SELECT page_count * page_size as size FROM pragma_page_count(), pragma_page_size()');
+    const stmt = this.db.prepare(
+      'SELECT page_count * page_size as size FROM pragma_page_count(), pragma_page_size()'
+    );
     const result = stmt.get() as { size: number };
     return result.size;
   }
@@ -270,15 +297,15 @@ export class DatabaseHelpers {
   public getTableSchema(tableName: string): any[] {
     // 验证表名，防止 SQL 注入
     this.validateTableName(tableName);
-    
+
     const stmt = this.db.prepare(`PRAGMA table_info("${tableName}")`);
     const result = stmt.all();
-    
-    logger.debug(`Retrieved schema for table ${tableName}`, 'DATABASE', { 
-      table: tableName, 
-      columnCount: result.length 
+
+    logger.debug(`Retrieved schema for table ${tableName}`, 'DATABASE', {
+      table: tableName,
+      columnCount: result.length,
     });
-    
+
     return result;
   }
 
@@ -288,9 +315,11 @@ export class DatabaseHelpers {
   public truncateTable(tableName: string): void {
     // 验证表名，防止 SQL 注入
     this.validateTableName(tableName);
-    
-    logger.warn(`Truncating table ${tableName}`, 'DATABASE', { table: tableName });
-    
+
+    logger.warn(`Truncating table ${tableName}`, 'DATABASE', {
+      table: tableName,
+    });
+
     this.db.prepare(`DELETE FROM "${tableName}"`).run();
     this.db.prepare('VACUUM').run();
   }
@@ -299,20 +328,20 @@ export class DatabaseHelpers {
    * 清空所有表数据
    */
   public truncateAllTables(): void {
-    const tables = this.getTableNames().filter(name => name !== 'migrations');
-    
+    const tables = this.getTableNames().filter((name) => name !== 'migrations');
+
     this.transaction(() => {
       // 临时禁用外键约束
       this.db.pragma('foreign_keys = OFF');
-      
-      tables.forEach(table => {
+
+      tables.forEach((table) => {
         this.db.prepare(`DELETE FROM "${table}"`).run();
       });
-      
+
       // 重新启用外键约束
       this.db.pragma('foreign_keys = ON');
     });
-    
+
     this.vacuum();
   }
 }
@@ -326,22 +355,29 @@ export function getDbHelpers(): DatabaseHelpers {
 export const dbHelpers = {
   checkHealth: () => getDbHelpers().checkHealth(),
   getTableNames: () => getDbHelpers().getTableNames(),
-  getTableRowCount: (tableName: string) => getDbHelpers().getTableRowCount(tableName),
+  getTableRowCount: (tableName: string) =>
+    getDbHelpers().getTableRowCount(tableName),
   getDatabaseStats: () => getDbHelpers().getDatabaseStats(),
-  transaction: <T>(operations: (db: Database.Database) => T, options?: TransactionOptions) => 
-    getDbHelpers().transaction(operations, options),
-  transactionAsync: <T>(operations: (db: Database.Database) => T | Promise<T>, options?: TransactionOptions) => 
-    getDbHelpers().transactionAsync(operations, options),
+  transaction: <T>(
+    operations: (db: Database.Database) => T,
+    options?: TransactionOptions
+  ) => getDbHelpers().transaction(operations, options),
+  transactionAsync: <T>(
+    operations: (db: Database.Database) => T | Promise<T>,
+    options?: TransactionOptions
+  ) => getDbHelpers().transactionAsync(operations, options),
   backup: (backupPath: string) => getDbHelpers().backup(backupPath),
   vacuum: () => getDbHelpers().vacuum(),
   analyze: () => getDbHelpers().analyze(),
   getDatabaseSize: () => getDbHelpers().getDatabaseSize(),
-  setPragma: (pragma: string, value: string | number) => getDbHelpers().setPragma(pragma, value),
+  setPragma: (pragma: string, value: string | number) =>
+    getDbHelpers().setPragma(pragma, value),
   getPragma: (pragma: string) => getDbHelpers().getPragma(pragma),
   close: () => getDbHelpers().close(),
   tableExists: (tableName: string) => getDbHelpers().tableExists(tableName),
   indexExists: (indexName: string) => getDbHelpers().indexExists(indexName),
-  getTableSchema: (tableName: string) => getDbHelpers().getTableSchema(tableName),
+  getTableSchema: (tableName: string) =>
+    getDbHelpers().getTableSchema(tableName),
   truncateTable: (tableName: string) => getDbHelpers().truncateTable(tableName),
-  truncateAllTables: () => getDbHelpers().truncateAllTables()
+  truncateAllTables: () => getDbHelpers().truncateAllTables(),
 };

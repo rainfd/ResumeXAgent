@@ -1,6 +1,10 @@
 // Analysis 相关类型定义
 
-export type AnalysisType = 'star_check' | 'optimization' | 'grammar_check' | 'custom';
+export type AnalysisType =
+  | 'star_check'
+  | 'optimization'
+  | 'grammar_check'
+  | 'custom';
 
 export interface IStarCheckResult {
   sections: {
@@ -74,9 +78,9 @@ export interface IAnalysisResults {
 }
 
 export interface IAnalysisSuggestions {
-  immediate: string[];  // 立即可以改进的
-  shortTerm: string[];  // 短期改进建议
-  longTerm: string[];   // 长期改进建议
+  immediate: string[]; // 立即可以改进的
+  shortTerm: string[]; // 短期改进建议
+  longTerm: string[]; // 长期改进建议
   priority: {
     high: string[];
     medium: string[];
@@ -109,7 +113,8 @@ export interface ICreateAnalysisRequest {
   };
 }
 
-export interface IUpdateAnalysisRequest extends Partial<ICreateAnalysisRequest> {
+export interface IUpdateAnalysisRequest
+  extends Partial<ICreateAnalysisRequest> {
   id: string;
   results?: IAnalysisResults;
   suggestions?: IAnalysisSuggestions;

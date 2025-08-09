@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
       });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const errorMessage = error.errors.map((e) => e.message).join(', ');
+        const errorMessage = error.issues.map((e: any) => e.message).join(', ');
         return createApiResponse(false, null, errorMessage, 400);
       }
       return createApiResponse(false, null, '文件验证失败', 400);

@@ -26,7 +26,7 @@ export class DatabaseMigrator {
         applied_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
     `;
-    
+
     this.db.exec(createMigrationTable);
   }
 
@@ -37,14 +37,15 @@ export class DatabaseMigrator {
 
   public getPendingMigrations(): string[] {
     const appliedMigrations = new Set(
-      this.getAppliedMigrations().map(m => m.version)
+      this.getAppliedMigrations().map((m) => m.version)
     );
-    
-    const allMigrationFiles = fs.readdirSync(this.migrationsPath)
-      .filter(file => file.endsWith('.sql'))
+
+    const allMigrationFiles = fs
+      .readdirSync(this.migrationsPath)
+      .filter((file) => file.endsWith('.sql'))
       .sort();
-    
-    return allMigrationFiles.filter(file => {
+
+    return allMigrationFiles.filter((file) => {
       const version = this.extractVersionFromFilename(file);
       return !appliedMigrations.has(version);
     });
@@ -70,7 +71,7 @@ export class DatabaseMigrator {
 
   public async runMigrations(): Promise<void> {
     const pendingMigrations = this.getPendingMigrations();
-    
+
     if (pendingMigrations.length === 0) {
       return;
     }
@@ -84,27 +85,28 @@ export class DatabaseMigrator {
     try {
       transaction();
     } catch (error) {
-      throw new Error(`Migration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Migration failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
   private applyMigration(migrationFile: string): void {
     const migrationPath = path.join(this.migrationsPath, migrationFile);
     const migrationSql = fs.readFileSync(migrationPath, 'utf8');
-    
+
     const version = this.extractVersionFromFilename(migrationFile);
     const name = this.extractNameFromFilename(migrationFile);
 
     try {
       // 执行迁移SQL
       this.db.exec(migrationSql);
-      
+
       // 记录迁移已应用
       const recordStmt = this.db.prepare(
         'INSERT INTO migrations (version, name) VALUES (?, ?)'
       );
       recordStmt.run(version, name);
-      
     } catch (error) {
       throw new Error(
         `Failed to apply migration ${migrationFile}: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -114,15 +116,15 @@ export class DatabaseMigrator {
 
   public async runSingleMigration(migrationFile: string): Promise<void> {
     const migrationPath = path.join(this.migrationsPath, migrationFile);
-    
+
     if (!fs.existsSync(migrationPath)) {
       throw new Error(`Migration file not found: ${migrationFile}`);
     }
 
     const version = this.extractVersionFromFilename(migrationFile);
     const appliedMigrations = this.getAppliedMigrations();
-    
-    if (appliedMigrations.some(m => m.version === version)) {
+
+    if (appliedMigrations.some((m) => m.version === version)) {
       throw new Error(`Migration ${version} has already been applied`);
     }
 
@@ -133,14 +135,19 @@ export class DatabaseMigrator {
     try {
       transaction();
     } catch (error) {
-      throw new Error(`Single migration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Single migration failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
-  public getMigrationStatus(): { applied: MigrationRecord[], pending: string[] } {
+  public getMigrationStatus(): {
+    applied: MigrationRecord[];
+    pending: string[];
+  } {
     return {
       applied: this.getAppliedMigrations(),
-      pending: this.getPendingMigrations()
+      pending: this.getPendingMigrations(),
     };
   }
 }

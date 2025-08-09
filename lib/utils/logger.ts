@@ -7,7 +7,7 @@ export enum LogLevel {
   DEBUG = 0,
   INFO = 1,
   WARN = 2,
-  ERROR = 3
+  ERROR = 3,
 }
 
 export interface LogEntry {
@@ -55,28 +55,45 @@ export class Logger {
   /**
    * 记录调试信息
    */
-  debug(message: string, context?: string, metadata?: Record<string, any>): void {
+  debug(
+    message: string,
+    context?: string,
+    metadata?: Record<string, any>
+  ): void {
     this.log(LogLevel.DEBUG, message, context, metadata);
   }
 
   /**
    * 记录一般信息
    */
-  info(message: string, context?: string, metadata?: Record<string, any>): void {
+  info(
+    message: string,
+    context?: string,
+    metadata?: Record<string, any>
+  ): void {
     this.log(LogLevel.INFO, message, context, metadata);
   }
 
   /**
    * 记录警告信息
    */
-  warn(message: string, context?: string, metadata?: Record<string, any>): void {
+  warn(
+    message: string,
+    context?: string,
+    metadata?: Record<string, any>
+  ): void {
     this.log(LogLevel.WARN, message, context, metadata);
   }
 
   /**
    * 记录错误信息
    */
-  error(message: string, context?: string, error?: Error, metadata?: Record<string, any>): void {
+  error(
+    message: string,
+    context?: string,
+    error?: Error,
+    metadata?: Record<string, any>
+  ): void {
     this.log(LogLevel.ERROR, message, context, metadata, error);
   }
 
@@ -100,7 +117,7 @@ export class Logger {
       message,
       context,
       metadata,
-      error
+      error,
     };
 
     this.writeLog(entry);
@@ -156,7 +173,7 @@ export class Logger {
       table,
       recordId,
       duration: duration ? `${duration}ms` : undefined,
-      ...metadata
+      ...metadata,
     };
 
     this.info(`Database ${operation}`, 'DATABASE', logMetadata);
@@ -177,7 +194,7 @@ export class Logger {
       path,
       statusCode,
       duration: duration ? `${duration}ms` : undefined,
-      userId
+      userId,
     };
 
     if (statusCode && statusCode >= 400) {
@@ -197,7 +214,7 @@ export class Logger {
   ): void {
     const metadata = {
       severity,
-      ...details
+      ...details,
     };
 
     if (severity === 'critical' || severity === 'high') {
@@ -218,13 +235,21 @@ export class Logger {
   ): void {
     const logMetadata = {
       duration: `${duration}ms`,
-      ...metadata
+      ...metadata,
     };
 
     if (duration > 1000) {
-      this.warn(`Slow operation: ${operation}`, context || 'PERFORMANCE', logMetadata);
+      this.warn(
+        `Slow operation: ${operation}`,
+        context || 'PERFORMANCE',
+        logMetadata
+      );
     } else {
-      this.debug(`Performance: ${operation}`, context || 'PERFORMANCE', logMetadata);
+      this.debug(
+        `Performance: ${operation}`,
+        context || 'PERFORMANCE',
+        logMetadata
+      );
     }
   }
 }
@@ -233,18 +258,35 @@ export class Logger {
 export const logger = Logger.getInstance();
 
 // 便捷函数导出
-export const logInfo = (message: string, context?: string, metadata?: Record<string, any>) => {
+export const logInfo = (
+  message: string,
+  context?: string,
+  metadata?: Record<string, any>
+) => {
   logger.info(message, context, metadata);
 };
 
-export const logError = (message: string, context?: string, error?: Error, metadata?: Record<string, any>) => {
+export const logError = (
+  message: string,
+  context?: string,
+  error?: Error,
+  metadata?: Record<string, any>
+) => {
   logger.error(message, context, error, metadata);
 };
 
-export const logWarn = (message: string, context?: string, metadata?: Record<string, any>) => {
+export const logWarn = (
+  message: string,
+  context?: string,
+  metadata?: Record<string, any>
+) => {
   logger.warn(message, context, metadata);
 };
 
-export const logDebug = (message: string, context?: string, metadata?: Record<string, any>) => {
+export const logDebug = (
+  message: string,
+  context?: string,
+  metadata?: Record<string, any>
+) => {
   logger.debug(message, context, metadata);
 };

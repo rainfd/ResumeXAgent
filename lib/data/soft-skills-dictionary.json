@@ -1,0 +1,274 @@
+{
+  "communicationSkills": [
+    {
+      "name": "沟通能力",
+      "aliases": ["沟通", "交流", "表达能力", "沟通协调"],
+      "category": "沟通协调",
+      "keywords": ["沟通", "交流", "表达", "协调", "汇报", "presentation", "演示"],
+      "importance": 8,
+      "description": "具备良好的口头和书面沟通表达能力"
+    },
+    {
+      "name": "跨部门协作",
+      "aliases": ["跨部门合作", "部门协调", "跨团队协作"],
+      "category": "沟通协调",
+      "keywords": ["跨部门", "协作", "合作", "协调", "配合"],
+      "importance": 7,
+      "description": "能够与不同部门团队有效协作"
+    },
+    {
+      "name": "客户沟通",
+      "aliases": ["客户交流", "用户沟通", "客户服务"],
+      "category": "沟通协调",
+      "keywords": ["客户", "用户", "需求", "反馈", "服务"],
+      "importance": 7,
+      "description": "与客户或用户进行有效沟通的能力"
+    },
+    {
+      "name": "技术交流",
+      "aliases": ["技术沟通", "技术分享", "技术讨论"],
+      "category": "沟通协调", 
+      "keywords": ["技术", "分享", "讨论", "交流", "方案"],
+      "importance": 8,
+      "description": "能够清晰地讲解技术概念和方案"
+    }
+  ],
+  "leadershipSkills": [
+    {
+      "name": "团队管理",
+      "aliases": ["团队领导", "人员管理", "团队建设"],
+      "category": "领导管理",
+      "keywords": ["管理", "领导", "团队", "人员", "建设"],
+      "importance": 9,
+      "description": "具备团队管理和领导能力"
+    },
+    {
+      "name": "项目管理",
+      "aliases": ["项目领导", "项目协调", "项目推进"],
+      "category": "项目管理",
+      "keywords": ["项目", "管理", "进度", "风险", "资源", "计划"],
+      "importance": 9,
+      "description": "具备项目管理经验和能力"
+    },
+    {
+      "name": "决策能力",
+      "aliases": ["决策", "判断力", "决断力"],
+      "category": "领导管理",
+      "keywords": ["决策", "判断", "决断", "选择", "权衡"],
+      "importance": 8,
+      "description": "具备良好的决策判断能力"
+    },
+    {
+      "name": "目标管理",
+      "aliases": ["目标设定", "目标达成", "KPI管理"],
+      "category": "领导管理",
+      "keywords": ["目标", "KPI", "OKR", "绩效", "达成"],
+      "importance": 7,
+      "description": "能够设定和管理团队目标"
+    }
+  ],
+  "analyticalSkills": [
+    {
+      "name": "逻辑思维",
+      "aliases": ["逻辑分析", "理性思维", "逻辑推理"],
+      "category": "分析思维",
+      "keywords": ["逻辑", "分析", "推理", "思维", "理性"],
+      "importance": 8,
+      "description": "具备强的逻辑分析和推理能力"
+    },
+    {
+      "name": "数据分析",
+      "aliases": ["数据处理", "数据挖掘", "数据洞察"],
+      "category": "分析思维",
+      "keywords": ["数据", "分析", "统计", "洞察", "挖掘"],
+      "importance": 8,
+      "description": "能够分析和解读数据，获得洞察"
+    },
+    {
+      "name": "问题分析",
+      "aliases": ["问题诊断", "根因分析", "问题定位"],
+      "category": "问题解决",
+      "keywords": ["问题", "分析", "诊断", "根因", "定位"],
+      "importance": 9,
+      "description": "能够准确分析和定位问题"
+    },
+    {
+      "name": "系统性思考",
+      "aliases": ["系统思维", "全局思考", "整体思维"],
+      "category": "分析思维",
+      "keywords": ["系统", "全局", "整体", "思考", "架构"],
+      "importance": 8,
+      "description": "具备系统性和全局性思考能力"
+    }
+  ],
+  "learningSkills": [
+    {
+      "name": "学习能力",
+      "aliases": ["快速学习", "自学能力", "学习适应"],
+      "category": "学习能力",
+      "keywords": ["学习", "快速", "自学", "适应", "掌握"],
+      "importance": 9,
+      "description": "具备强的学习和适应能力"
+    },
+    {
+      "name": "持续学习",
+      "aliases": ["终身学习", "主动学习", "学习成长"],
+      "category": "学习能力", 
+      "keywords": ["持续", "主动", "成长", "提升", "更新"],
+      "importance": 8,
+      "description": "保持持续学习和自我提升"
+    },
+    {
+      "name": "新技术学习",
+      "aliases": ["技术学习", "技术跟进", "技术更新"],
+      "category": "学习能力",
+      "keywords": ["新技术", "技术", "跟进", "更新", "掌握"],
+      "importance": 9,
+      "description": "能够快速学习和掌握新技术"
+    },
+    {
+      "name": "知识迁移",
+      "aliases": ["经验迁移", "知识应用", "举一反三"],
+      "category": "学习能力",
+      "keywords": ["迁移", "应用", "举一反三", "灵活", "转化"],
+      "importance": 7,
+      "description": "能够灵活应用和迁移知识经验"
+    }
+  ],
+  "teamworkSkills": [
+    {
+      "name": "团队协作",
+      "aliases": ["团队合作", "协同工作", "团队配合"],
+      "category": "团队协作",
+      "keywords": ["团队", "协作", "合作", "配合", "协同"],
+      "importance": 9,
+      "description": "具备良好的团队协作精神"
+    },
+    {
+      "name": "责任心",
+      "aliases": ["责任感", "担当", "责任意识"],
+      "category": "团队协作",
+      "keywords": ["责任", "担当", "负责", "可靠", "承担"],
+      "importance": 8,
+      "description": "具有强烈的责任心和担当精神"
+    },
+    {
+      "name": "执行力",
+      "aliases": ["执行", "落地", "推进", "实施"],
+      "category": "团队协作",
+      "keywords": ["执行", "落地", "推进", "实施", "完成"],
+      "importance": 9,
+      "description": "具备强的执行力和落地能力"
+    },
+    {
+      "name": "主动性",
+      "aliases": ["主动", "积极性", "主观能动性"],
+      "category": "团队协作",
+      "keywords": ["主动", "积极", "能动", "自驱", "主观"],
+      "importance": 8,
+      "description": "具有主动积极的工作态度"
+    }
+  ],
+  "problemSolvingSkills": [
+    {
+      "name": "问题解决",
+      "aliases": ["解决问题", "问题处理", "疑难解决"],
+      "category": "问题解决", 
+      "keywords": ["解决", "处理", "应对", "解答", "攻克"],
+      "importance": 9,
+      "description": "具备解决复杂问题的能力"
+    },
+    {
+      "name": "调试能力",
+      "aliases": ["debug", "故障排查", "问题定位"],
+      "category": "问题解决",
+      "keywords": ["调试", "debug", "排查", "定位", "修复"],
+      "importance": 8,
+      "description": "具备代码调试和故障排查能力"
+    },
+    {
+      "name": "应急处理",
+      "aliases": ["紧急处理", "突发处理", "危机处理"],
+      "category": "问题解决",
+      "keywords": ["应急", "紧急", "突发", "危机", "快速"],
+      "importance": 7,
+      "description": "能够处理紧急突发情况"
+    },
+    {
+      "name": "创新思维",
+      "aliases": ["创新", "创意", "创造性思维"],
+      "category": "创新创造",
+      "keywords": ["创新", "创意", "创造", "新颖", "突破"],
+      "importance": 7,
+      "description": "具备创新和创造性思维"
+    }
+  ],
+  "workAttitude": [
+    {
+      "name": "抗压能力",
+      "aliases": ["抗压", "承压", "压力承受"],
+      "category": "其他软技能",
+      "keywords": ["抗压", "承压", "压力", "坚韧", "韧性"],
+      "importance": 8,
+      "description": "具备良好的抗压和承压能力"
+    },
+    {
+      "name": "细心细致",
+      "aliases": ["细心", "细致", "认真", "严谨"],
+      "category": "其他软技能",
+      "keywords": ["细心", "细致", "认真", "严谨", "仔细"],
+      "importance": 7,
+      "description": "工作细心细致，态度严谨认真"
+    },
+    {
+      "name": "时间管理",
+      "aliases": ["时间规划", "时间安排", "效率管理"],
+      "category": "其他软技能",
+      "keywords": ["时间", "管理", "规划", "安排", "效率"],
+      "importance": 8,
+      "description": "具备良好的时间管理和效率意识"
+    },
+    {
+      "name": "自驱力",
+      "aliases": ["自驱", "自我驱动", "内驱力"],
+      "category": "其他软技能",
+      "keywords": ["自驱", "驱动", "内驱", "主观能动", "自觉"],
+      "importance": 8,
+      "description": "具有强的自我驱动和自觉性"
+    }
+  ],
+  "specificDomain": [
+    {
+      "name": "产品思维",
+      "aliases": ["产品意识", "用户思维", "产品感觉"],
+      "category": "其他软技能",
+      "keywords": ["产品", "用户", "需求", "体验", "商业"],
+      "importance": 8,
+      "description": "具备产品思维和用户意识"
+    },
+    {
+      "name": "商业理解",
+      "aliases": ["商业思维", "业务理解", "商业敏感"],
+      "category": "其他软技能",
+      "keywords": ["商业", "业务", "商务", "市场", "盈利"],
+      "importance": 7,
+      "description": "对商业和业务有深入理解"
+    },
+    {
+      "name": "敏捷开发",
+      "aliases": ["敏捷", "Scrum", "迭代开发"],
+      "category": "项目管理",
+      "keywords": ["敏捷", "scrum", "迭代", "sprint", "看板"],
+      "importance": 7,
+      "description": "熟悉敏捷开发流程和方法"
+    },
+    {
+      "name": "代码规范",
+      "aliases": ["编码规范", "代码质量", "代码标准"],
+      "category": "其他软技能",
+      "keywords": ["规范", "质量", "标准", "clean code", "可维护"],
+      "importance": 8,
+      "description": "重视代码质量和编码规范"
+    }
+  ]
+}

@@ -15,6 +15,12 @@ export * from './api.types';
 // Grammar Issue 相关类型
 export * from './grammar-issue.types';
 
+// Company 相关类型
+export * from './company.types';
+
+// Skill 相关类型
+export * from './skill.types';
+
 // Repository 基础类型（从 repository 文件重新导出）
 export type {
   Resume,
